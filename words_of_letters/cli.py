@@ -14,4 +14,4 @@ DEBUG = os.getenv("MC_FLOW_SIM_DEBUG")
 def main(argv=None):
     """Process ... TODO."""
     argv = sys.argv[1:] if argv is None else argv
-    solve(argv))
+    solve(argv)
