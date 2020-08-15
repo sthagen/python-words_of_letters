@@ -8,7 +8,7 @@ import words_of_letters.cli as cli
 def test_main_nok_empty_array(capsys):
     job = ['[]']
     usage_feedback = (
-        'Usage: sys.args[0] <letter> <letter> ... <slots> [<slots> ...]\n'
+        'Usage: script <letter> <letter> ... <slots> [<slots> ...]\n'
         "Received (['[]']) argument vector"
     )
     assert cli.main(job) is 2
