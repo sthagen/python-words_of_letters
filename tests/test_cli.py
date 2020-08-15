@@ -11,7 +11,7 @@ def test_main_nok_empty_array(capsys):
         'Usage: sys.args[0] <letter> <letter> ... <slots> [<slots> ...]\n'
         "Received (['[]']) argument vector"
     )
-    assert cli.main(job) is None
+    assert cli.main(job) is 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
 
