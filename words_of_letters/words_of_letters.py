@@ -57,7 +57,7 @@ def match_gen(candidates, material):
 
 
 def solve(argv=None):
-    """Driv the solver."""
+    """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
     if len(argv) < 3:
         print("Usage: sys.args[0] <letter> <letter> ... <slots> [<slots> ...]")
