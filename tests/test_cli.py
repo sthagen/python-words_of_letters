@@ -9,7 +9,7 @@ def test_main_ok_empty_array(capsys):
     job = ['[]']
     usage_feedback = (
         'Usage: sys.args[0] <letter> <letter> ... <slots> [<slots> ...]\n'
-        "\n Received (['[]']) argument vector"
+        "Received (['[]']) argument vector"
     )
     assert cli.main(job) is None
     out, err = capsys.readouterr()
