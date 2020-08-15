@@ -60,7 +60,7 @@ def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
     if len(argv) < 3:
-        print(f"Usage: {sys.argv[0]} <letter> <letter> ... <slots> [<slots> ...]")
+        print("Usage: script <letter> <letter> ... <slots> [<slots> ...]")
         print(f"Received ({argv}) argument vector")
         return 2
 
