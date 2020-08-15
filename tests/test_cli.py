@@ -11,7 +11,7 @@ def test_main_nok_empty_array(capsys):
         'Usage: script <letter> <letter> ... <slots> [<slots> ...]\n'
         "Received (['[]']) argument vector"
     )
-    assert cli.main(job) is 2
+    assert cli.main(job) == 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
 
@@ -21,6 +21,6 @@ def test_main_nok_too_many_slots(capsys):
     usage_feedback = (
         'ERROR Only (2) characters given but requested (12) slots (12) ...'
     )
-    assert cli.main(job) is 2
+    assert cli.main(job) == 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
