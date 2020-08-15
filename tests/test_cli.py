@@ -17,7 +17,7 @@ def test_main_nok_empty_array(capsys):
 
 
 def test_main_nok_too_many_slots(capsys):
-    job = ["A", "B", 12]
+    job = ["A", "B", "12"]
     usage_feedback = (
         'ERROR Only (2) characters given but requested (12) slots (12) ...\n'
     )
