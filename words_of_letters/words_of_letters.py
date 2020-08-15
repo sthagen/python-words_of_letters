@@ -60,13 +60,13 @@ def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
     if len(argv) < 3:
-        print("Usage: sys.args[0] <letter> <letter> ... <slots> [<slots> ...]")
+        print(f"Usage: {sys.argv[0]} <letter> <letter> ... <slots> [<slots> ...]")
         print(f"Received ({argv}) argument vector")
         return 2
 
     letters = []
     n_slots = []
-    for char in sys.argv[1:]:
+    for char in argv:
         cand = char.upper()
         if cand in ASCII_LETTERS or cand in EXTRA_LETTERS:
             letters.append(cand)
