@@ -12,3 +12,11 @@ def test_read_mixed_case_word_text_minimal_ok():
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     word_length = 2
     assert wol.read_mixed_case_word_text(word_length) == {'AT', 'WC', 'BH', 'WM', 'WG', 'AU'}
+
+
+def test_match_gen_minimal_ok():
+    letters = ["A", "T", "W"]
+    word_length = 2
+    n_candidates = wol.read_mixed_case_word_text(word_length)
+    matches = sorted(set(wol.match_gen(n_candidates, letters)))
+    assert matches == ["AT"]
