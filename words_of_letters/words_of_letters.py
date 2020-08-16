@@ -55,7 +55,8 @@ def match_gen(candidates, material):
             yield word
 
 
-def display_letters(letters, n_letters):
+def display_letters(letters):
+    n_letters = len(letters)
     print(f"{n_letters} Letters available:")
     print()
     if n_letters in (PICTURE_LETTERS, SWIPE_LETTERS):
@@ -123,7 +124,7 @@ def solve(argv=None):
     # dump(n_candidates)
     n_candidates = load(slots, unique_letters)
 
-    display_letters(letters, n_letters)
+    display_letters(letters)
 
     matches = sorted(set(match_gen(n_candidates, letters)))
     print(
