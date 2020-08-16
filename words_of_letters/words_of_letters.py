@@ -55,6 +55,24 @@ def match_gen(candidates, material):
             yield word
 
 
+def display_letters(letters, n_letters):
+    print(f"{n_letters} Letters available:")
+    print()
+    if n_letters in (PICTURE_LETTERS, SWIPE_LETTERS):
+        if n_letters == PICTURE_LETTERS:
+            print(f"    {' '.join(letters[:6])}")
+            print(f"    {' '.join(letters[6:])}")
+        else:  # SWIPE_LETTERS
+            print(f"    {' '.join(letters[:4])}")
+            print(f"    {' '.join(letters[4:8])}")
+            print(f"    {' '.join(letters[8:12])}")
+            print(f"    {' '.join(letters[12:16])}")
+            print(f"    {' '.join(letters[16:])}")
+    else:
+        print(f"    {' '.join(letters)}")
+    print()
+
+
 def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
@@ -105,21 +123,7 @@ def solve(argv=None):
     # dump(n_candidates)
     n_candidates = load(slots, unique_letters)
 
-    print(f"{n_letters} Letters available:")
-    print()
-    if n_letters in (PICTURE_LETTERS, SWIPE_LETTERS):
-        if n_letters == PICTURE_LETTERS:
-            print(f"    {' '.join(letters[:6])}")
-            print(f"    {' '.join(letters[6:])}")
-        else:  # SWIPE_LETTERS
-            print(f"    {' '.join(letters[:4])}")
-            print(f"    {' '.join(letters[4:8])}")
-            print(f"    {' '.join(letters[8:12])}")
-            print(f"    {' '.join(letters[12:16])}")
-            print(f"    {' '.join(letters[16:])}")
-    else:
-        print(f"    {' '.join(letters)}")
-    print()
+    display_letters(letters, n_letters)
 
     matches = sorted(set(match_gen(n_candidates, letters)))
     print(
@@ -133,4 +137,3 @@ def solve(argv=None):
         print(f"  {n:3d}) {match}", end="")
     print("\n\n")
     return 0
-
