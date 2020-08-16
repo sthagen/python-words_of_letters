@@ -37,7 +37,7 @@ def dump(word_set):
 
 
 def load(word_length, letter_set):
-    """Load dataase for word length."""
+    """Load database for word length."""
     db_path = f"{DB_BASE_PATH}{word_length}.pickle"
     params = dict(encoding=ENCODING)
     l_s = letter_set
