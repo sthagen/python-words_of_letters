@@ -56,3 +56,14 @@ def test_solve_nok_too_many_letters(capsys):
     assert wol.solve(job) == 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
+
+
+def test_solve_nok_no_slots(capsys):
+    job = ["A" for _ in range(wol.SWIPE_LETTERS)]
+    chars = len(job)
+    usage_feedback = (
+        f"ERROR ({chars}) character{'' if chars == 1 else 's'} given but requested no ({0}) slots () ..."
+    )
+    assert wol.solve(job) == 2
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
