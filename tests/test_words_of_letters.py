@@ -45,6 +45,21 @@ def test_display_letters_ok_pictures(capsys):
     assert out.strip() == screen_display
 
 
+def test_display_letters_ok_swipe(capsys):
+    letters = ["A" for _ in range(wol.SWIPE_LETTERS)]
+    screen_display = (
+        f"{len(letters)} Letters available:\n\n"
+        f"    {' '.join(letters[:4])}\n"
+        f"    {' '.join(letters[4:8])}\n"
+        f"    {' '.join(letters[8:12])}\n"
+        f"    {' '.join(letters[12:16])}\n"
+        f"    {' '.join(letters[16:])}"
+    )
+    assert wol.display_letters(letters) is None
+    out, err = capsys.readouterr()
+    assert out.strip() == screen_display
+
+
 def test_solve_nok_too_many_slots(capsys):
     job = ["A", "B", "12"]
     chars = len(job[:2])
