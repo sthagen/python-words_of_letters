@@ -22,6 +22,17 @@ def test_match_gen_ok_minimal():
     assert matches == ["AT"]
 
 
+def test_display_letters_ok_minimal(capsys):
+    letters = ["A", "B"]
+    screen_display = (
+        f"{len(letters)} Letters available:\n\n"
+        f"    {' '.join(letters)}"
+    )
+    assert wol.display_letters(letters) is None
+    out, err = capsys.readouterr()
+    assert out.strip() == screen_display
+
+
 def test_solve_nok_too_many_slots(capsys):
     job = ["A", "B", "12"]
     chars = len(job[:2])
