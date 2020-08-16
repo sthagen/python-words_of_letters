@@ -67,3 +67,16 @@ def test_solve_nok_no_slots(capsys):
     assert wol.solve(job) == 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
+
+
+def test_solve_nok_no_slots_with_warning(capsys):
+    bad = "99"
+    job = ["A", "B", bad]
+    chars = len(job) - 1
+    usage_feedback = (
+        f"WARNING Ignoring character/slot ({bad}) ...\n"
+        f"ERROR ({chars}) character{'' if chars == 1 else 's'} given but requested no ({0}) slots () ..."
+    )
+    assert wol.solve(job) == 2
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
