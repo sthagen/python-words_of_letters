@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # pylint: disable=line-too-long
 """Add logical documentation here later TODO."""
@@ -7,7 +6,7 @@ import sys
 
 from words_of_letters.words_of_letters import solve
 
-DEBUG = os.getenv("MC_FLOW_SIM_DEBUG")
+DEBUG = os.getenv("WOL_DEBUG")
 
 
 # pylint: disable=expression-not-assigned
