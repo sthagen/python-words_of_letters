@@ -1,4 +1,3 @@
-#! /usr/bin/env python3
 # encoding: utf-8
 # pylint: disable=invalid-name,line-too-long
 """Find words withing letters given."""
