@@ -74,6 +74,19 @@ def display_letters(letters):
     print()
 
 
+def display_solutions(letters, matches, slots):
+    print(
+        f"Found {len(matches)} candidates of length({slots}) from "
+        f"letters({' '.join(letters)}):"
+    )
+    col_n = 1 if len(matches) < 26 else 5
+    for n, match in enumerate(matches):
+        if not n % col_n:
+            print()
+        print(f"  {n:3d}) {match}", end="")
+    print("\n\n")
+
+
 def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
@@ -127,14 +140,5 @@ def solve(argv=None):
     display_letters(letters)
 
     matches = sorted(set(match_gen(n_candidates, letters)))
-    print(
-        f"Found {len(matches)} candidates of length({slots}) from "
-        f"letters({' '.join(letters)}):"
-    )
-    col_n = 1 if len(matches) < 26 else 5
-    for n, match in enumerate(matches):
-        if not n % col_n:
-            print()
-        print(f"  {n:3d}) {match}", end="")
-    print("\n\n")
+    display_solutions(letters, matches, slots)
     return 0
