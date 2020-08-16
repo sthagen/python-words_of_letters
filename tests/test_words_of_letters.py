@@ -25,10 +25,22 @@ def test_match_gen_ok_minimal():
 def test_solve_nok_too_many_slots(capsys):
     job = ["A", "B", "12"]
     chars = len(job[:2])
-    n_slots = [int(n) for n in job[-1:]]
+    n_slots = [int(n) for n in job[2:]]
     sum_slots = sum(n_slots)
     usage_feedback = (
         f'ERROR Only ({chars}) characters given but requested ({sum_slots}) slots ({", ".join(str(n) for n in n_slots)}) ...'
+    )
+    assert wol.solve(job) == 2
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
+
+
+def test_solve_nok_too_many_words(capsys):
+    job = ["A", "B", "C", "D", "E", "1", "1", "1", "1", "1"]
+    chars = len(job[:5])
+    n_slots = [int(n) for n in job[5:]]
+    usage_feedback = (
+        f'ERROR More than 4 slots given ({len(n_slots)})'
     )
     assert wol.solve(job) == 2
     out, err = capsys.readouterr()
