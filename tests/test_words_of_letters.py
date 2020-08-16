@@ -45,3 +45,14 @@ def test_solve_nok_too_many_words(capsys):
     assert wol.solve(job) == 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
+
+
+def test_solve_nok_too_many_letters(capsys):
+    job = ["A" for _ in range(wol.SWIPE_LETTERS + 1)]
+    chars = len(job)
+    usage_feedback = (
+        f"ERROR More than {wol.SWIPE_LETTERS} letters given ({chars})"
+    )
+    assert wol.solve(job) == 2
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
