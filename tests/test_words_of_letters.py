@@ -49,11 +49,11 @@ def test_display_letters_ok_swipe(capsys):
     letters = ["A" for _ in range(wol.SWIPE_LETTERS)]
     screen_display = (
         f"{len(letters)} Letters available:\n\n"
-        f"    {' '.join(letters[:4])}\n"
-        f"    {' '.join(letters[4:8])}\n"
-        f"    {' '.join(letters[8:12])}\n"
-        f"    {' '.join(letters[12:16])}\n"
-        f"    {' '.join(letters[16:])}"
+        f"    {' '.join(letters[:5])}\n"
+        f"    {' '.join(letters[5:10])}\n"
+        f"    {' '.join(letters[10:15])}\n"
+        f"    {' '.join(letters[15:20])}\n"
+        f"    {' '.join(letters[20:])}"
     )
     assert wol.display_letters(letters) is None
     out, err = capsys.readouterr()
