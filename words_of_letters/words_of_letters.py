@@ -10,7 +10,7 @@ ASCII_LETTERS = string.ascii_uppercase
 EXTRA_LETTERS = ("Ä", "Ö", "Ü")
 
 PICTURE_LETTERS = 12
-SWIPE_LETTERS = 20
+SWIPE_LETTERS = 25
 MAX_LETTERS = SWIPE_LETTERS
 
 LANGUAGE_GRAMMAR = "ngerman"  # Sample for German, new grammar
@@ -64,11 +64,11 @@ def display_letters(letters):
             print(f"    {' '.join(letters[:6])}")
             print(f"    {' '.join(letters[6:])}")
         else:  # SWIPE_LETTERS
-            print(f"    {' '.join(letters[:4])}")
-            print(f"    {' '.join(letters[4:8])}")
-            print(f"    {' '.join(letters[8:12])}")
-            print(f"    {' '.join(letters[12:16])}")
-            print(f"    {' '.join(letters[16:])}")
+            print(f"    {' '.join(letters[:5])}")
+            print(f"    {' '.join(letters[5:10])}")
+            print(f"    {' '.join(letters[10:15])}")
+            print(f"    {' '.join(letters[15:20])}")
+            print(f"    {' '.join(letters[20:])}")
     else:
         print(f"    {' '.join(letters)}")
     print()
