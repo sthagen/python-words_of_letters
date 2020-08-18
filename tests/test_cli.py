@@ -32,7 +32,7 @@ def test_main_nok_too_many_slots(capsys):
     
 def test_main_ok_init_short_option(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
-    job = ["-i"]
+    job = ["-i", 2, 2]
     usage_feedback = (
         'Initializing word databases ...'
     )
@@ -43,7 +43,7 @@ def test_main_ok_init_short_option(capsys):
 
 def test_main_ok_init_long_option(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
-    job = ["--init"]
+    job = ["--init", 2, 2]
     usage_feedback = (
         'Initializing word databases ...'
     )
