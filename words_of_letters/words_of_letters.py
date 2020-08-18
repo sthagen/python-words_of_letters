@@ -48,7 +48,7 @@ def load(word_length, letter_set):
 
 def derive_databases(first, last):
     """Load words of typical word lengths from text and dump as pickle databases."""
-    for slots in range(first, last):
+    for slots in range(first, last + 1):
         dump(read_mixed_case_word_text(slots))
 
 
