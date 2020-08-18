@@ -46,6 +46,12 @@ def load(word_length, letter_set):
         return (word for word in ld(handle, **params) for x in l_s if x in word)
 
 
+def derive_databases():
+    """Load words of typical word lengths from text and dump as pickle databases."""
+    for slots in range(2, 20):
+        dump(read_mixed_case_word_text(slots))
+
+
 def match_gen(candidates, material):
     """DRY and streaming."""
     uniq_ch = set(material)
@@ -90,6 +96,11 @@ def display_solutions(letters, matches, slots):
 def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
+    if "-i" in argv or ""--init" in argv:
+        print("Initializing word databases ...")
+        derive_databases()
+        return 0
+
     if len(argv) < 3:
         print("Usage: script <letter> <letter> ... <slots> [<slots> ...]")
         print(f"Received ({argv}) argument vector")
@@ -133,8 +144,6 @@ def solve(argv=None):
         return 2
 
     slots = n_slots[0]
-    # n_candidates = read_mixed_case_word_text(slots)
-    # dump(n_candidates)
     n_candidates = load(slots, unique_letters)
 
     display_letters(letters)
