@@ -96,7 +96,7 @@ def display_solutions(letters, matches, slots):
 def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
-    if "-i" in argv or ""--init" in argv:
+    if "-i" in argv or "--init" in argv:
         print("Initializing word databases ...")
         derive_databases()
         return 0
