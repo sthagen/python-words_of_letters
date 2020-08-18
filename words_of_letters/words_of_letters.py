@@ -46,9 +46,9 @@ def load(word_length, letter_set):
         return (word for word in ld(handle, **params) for x in l_s if x in word)
 
 
-def derive_databases():
+def derive_databases(from, to):
     """Load words of typical word lengths from text and dump as pickle databases."""
-    for slots in range(2, 20):
+    for slots in range(from, to):
         dump(read_mixed_case_word_text(slots))
 
 
@@ -96,9 +96,10 @@ def display_solutions(letters, matches, slots):
 def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
-    if "-i" in argv or "--init" in argv:
-        print("Initializing word databases ...")
-        derive_databases()
+    if argv[0] in ("-i", "--init"):
+        min_size, max_size = int(argv[1]), int(argv[2])
+        print(f"Initializing word databases for sizes in [{min_size}, {max_size}] ...")
+        derive_databases(min_size, max_size)
         return 0
 
     if len(argv) < 3:
