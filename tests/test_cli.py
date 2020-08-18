@@ -3,6 +3,7 @@
 import pytest  # type: ignore
 
 import words_of_letters.cli as cli
+import words_of_letters.words_of_letters as wol
 
 LANGUAGE_GRAMMAR = "tgerman"  # Sample for German, new grammar
 LANGUAGE_TEXT_FILE_PATH = f"tests/fixture/text/{LANGUAGE_GRAMMAR}_title.dict"
