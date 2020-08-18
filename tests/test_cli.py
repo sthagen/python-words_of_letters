@@ -33,7 +33,18 @@ def test_main_ok_init_short_option(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     job = ["-i"]
     usage_feedback = (
-        'E"Initializing word databases ..."'
+        'Initializing word databases ...'
+    )
+    assert cli.main(job) == 0
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
+
+
+def test_main_ok_init_long_option(capsys):
+    wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
+    job = ["--init"]
+    usage_feedback = (
+        'Initializing word databases ...'
     )
     assert cli.main(job) == 0
     out, err = capsys.readouterr()
