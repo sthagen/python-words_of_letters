@@ -258,3 +258,22 @@ def test_solve_nok_no_slots_with_warnings_singular(capsys):
     assert wol.solve(job) == 2
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
+
+
+def test_solve_ok_minimal_with_placeholders(capsys):
+    wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
+    wol.DB_BASE_PATH = DB_BASE_PATH
+    word_length = 2
+    job = ["A", "T", f"{word_length}", "A", "_"]
+    screen_display = (
+        '2 Letters available:\n'
+        '\n'
+        '    A T\n'
+        '\n'
+        'Found 1 candidates of length(2) from letters(A T):\n'
+        '\n'
+        '    0) AT'
+    )
+    assert wol.solve(job) == 0
+    out, err = capsys.readouterr()
+    assert out.strip() == screen_display
