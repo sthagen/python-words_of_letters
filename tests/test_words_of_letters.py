@@ -40,6 +40,15 @@ def test_match_gen_ok_small_mixed_matching_placeholders():
     assert matches == ["AT"]
 
 
+def test_match_gen_ok_small_mixed_failing_placeholders():
+    letters = ["A", "T", "W"]
+    places = {1: "W"}
+    word_length = 2
+    n_candidates = wol.read_mixed_case_word_text(word_length)
+    matches = sorted(set(wol.match_gen(n_candidates, letters, places)))
+    assert matches == []
+
+
 def test_match_gen_ok_small_complete_matching_placeholders():
     letters = ["A", "T", "W"]
     places = {0: "A", 1: "T"}
