@@ -52,13 +52,14 @@ def derive_databases(first, last):
         dump(read_mixed_case_word_text(slots))
 
 
-def match_gen(candidates, material):
+def match_gen(candidates, material, places=None):
     """DRY and streaming."""
     uniq_ch = set(material)
     l_c = {u_ch: material.count(u_ch) for u_ch in uniq_ch}
     for word in set(candidates):
         if all(u_ch in uniq_ch and l_c[u_ch] >= word.count(u_ch) for u_ch in set(word)):
-            yield word
+            if not places or all(word[c] == m for c, m in places.items()):
+                yield word
 
 
 def display_letters(letters):
@@ -103,20 +104,30 @@ def solve(argv=None):
         return 0
 
     if len(argv) < 3:
-        print("Usage: script <letter> <letter> ... <slots> [<slots> ...]")
+        print("Usage: script <letter> <letter> ... <slots> [<placeholders> <slots> ...]")
         print(f"Received ({argv}) argument vector")
         return 2
 
     letters = []
     n_slots = []
+    placeholders = {}
+    slot_active = False
     for char in argv:
         cand = char.upper()
-        if cand in ASCII_LETTERS or cand in EXTRA_LETTERS:
-            letters.append(cand)
+        if cand in ASCII_LETTERS or cand in EXTRA_LETTERS or cand == "_":
+            if not slot_active:
+                if cand != "_":
+                    letters.append(cand)
+                else:
+                    print(f"WARNING Ignoring placeholder as letter ({char}) ...")
+            else:
+                placeholders.setdefault(n_slots[-1], []).append(cand)
         elif cand in string.digits and 0 < int(cand) < 10:
             n_slots.append(int(cand))
+            slot_active = True
         elif len(cand) == 2 and 9 < int(cand) < 17:
             n_slots.append(int(cand))
+            slot_active = True
         else:
             print(f"WARNING Ignoring character/slot ({char}) ...")
 
@@ -145,10 +156,11 @@ def solve(argv=None):
         return 2
 
     slots = n_slots[0]
+    places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
     n_candidates = load(slots, unique_letters)
 
     display_letters(letters)
 
-    matches = sorted(set(match_gen(n_candidates, letters)))
+    matches = sorted(set(match_gen(n_candidates, letters, places)))
     display_solutions(letters, matches, slots)
     return 0
