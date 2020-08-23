@@ -159,11 +159,11 @@ def test_solve_nok_too_many_slots(capsys):
 
 
 def test_solve_nok_too_many_words(capsys):
-    job = ["A", "B", "C", "D", "E", "1", "1", "1", "1", "1"]
-    chars = len(job[:5])
+    job = ["A", "B", "C", "D", "E"]
+    job.extend(["1"] * (wol.MAX_SLOTS + 1))
     n_slots = [int(n) for n in job[5:]]
     usage_feedback = (
-        f'ERROR More than 4 slots given ({len(n_slots)})'
+        f'ERROR More than {wol.MAX_SLOTS} slots given ({len(n_slots)})'
     )
     assert wol.solve(job) == 2
     out, err = capsys.readouterr()

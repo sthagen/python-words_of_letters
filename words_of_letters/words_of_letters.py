@@ -12,6 +12,7 @@ EXTRA_LETTERS = ("Ä", "Ö", "Ü")
 PICTURE_LETTERS = 12
 SWIPE_LETTERS = 25
 MAX_LETTERS = SWIPE_LETTERS
+MAX_SLOTS = 4
 
 LANGUAGE_GRAMMAR = "ngerman"  # Sample for German, new grammar
 LANGUAGE_TEXT_FILE_PATH = f"data/text/{LANGUAGE_GRAMMAR}.dict" 
@@ -155,7 +156,7 @@ def solve(argv=None):
         return 2
 
     n_slots.sort(reverse=True)
-    if len(n_slots) > 4:
+    if len(n_slots) > MAX_SLOTS:
         print(f"ERROR More than 4 slots given ({len(n_slots)})")
         return 2
 
