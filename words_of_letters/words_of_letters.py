@@ -102,25 +102,25 @@ def parse(argv):
     errors, warnings = [], []
     slot_active = False
     for char in argv:
-        cand = char.upper()
-        if cand in ASCII_LETTERS or cand in EXTRA_LETTERS or cand == "_":
+        u_char = char.upper()
+        if u_char in ASCII_LETTERS or u_char in EXTRA_LETTERS or u_char == "_":
             if not slot_active:
-                if cand != "_":
-                    letters.append(cand)
+                if u_char != "_":
+                    letters.append(u_char)
                 else:
                     warnings.append(f"WARNING Ignoring placeholder as letter ({char}) ...")
             else:
                 cs = n_slots[-1]
-                placeholders.setdefault(cs, []).append(cand)
+                placeholders.setdefault(cs, []).append(u_char)
                 ph_cs = placeholders[cs]
                 if len(ph_cs) > cs:
                     errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
                     return letters, n_slots, placeholders, errors, warnings
-        elif cand in string.digits and 0 < int(cand) < 10:
-            n_slots.append(int(cand))
+        elif u_char in string.digits and 0 < int(u_char) < 10:
+            n_slots.append(int(u_char))
             slot_active = True
-        elif len(cand) == 2 and 9 < int(cand) < 17:
-            n_slots.append(int(cand))
+        elif len(u_char) == 2 and 9 < int(u_char) < 17:
+            n_slots.append(int(u_char))
             slot_active = True
         else:
             warnings.append(f"WARNING Ignoring character/slot ({char}) ...")
