@@ -121,7 +121,13 @@ def solve(argv=None):
                 else:
                     print(f"WARNING Ignoring placeholder as letter ({char}) ...")
             else:
-                placeholders.setdefault(n_slots[-1], []).append(cand)
+                cs = n_slots[-1]
+                placeholders.setdefault(cs, []).append(cand)
+                ph_cs = placeholders[cs]
+                if len(ph_cs) > cs:
+                    print(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
+                    return 2
+
         elif cand in string.digits and 0 < int(cand) < 10:
             n_slots.append(int(cand))
             slot_active = True
