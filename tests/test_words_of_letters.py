@@ -22,6 +22,15 @@ def test_match_gen_ok_minimal():
     assert matches == ["AT"]
 
 
+def test_match_gen_ok_small_wildcard_placeholders():
+    letters = ["A", "T", "W"]
+    places = {}
+    word_length = 2
+    n_candidates = wol.read_mixed_case_word_text(word_length)
+    matches = sorted(set(wol.match_gen(n_candidates, letters, places)))
+    assert matches == ["AT"]
+
+
 def test_display_letters_ok_minimal(capsys):
     letters = ["A", "B"]
     screen_display = (
