@@ -110,29 +110,27 @@ def parse(argv):
 
     slot_active = False
     for chars in argv:
-        for char in chars:
-            u_char = char.upper()
-            if u_char in ASCII_LETTERS or u_char in EXTRA_LETTERS or u_char == "_":
-                if not slot_active:
-                    if u_char != "_":
-                        letters.append(u_char)
+        if all(c not in string.digits for c in chars):
+            for char in chars:
+                u_char = char.upper()
+                if u_char in ASCII_LETTERS or u_char in EXTRA_LETTERS or u_char == "_":
+                    if not slot_active:
+                        if u_char != "_":
+                            letters.append(u_char)
+                        else:
+                            warnings.append(f"WARNING Ignoring placeholder as letter ({char}) ...")
                     else:
-                        warnings.append(f"WARNING Ignoring placeholder as letter ({char}) ...")
-                else:
-                    cs = n_slots[-1]
-                    placeholders.setdefault(cs, []).append(u_char)
-                    ph_cs = placeholders[cs]
-                    if len(ph_cs) > cs:
-                        errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
-                        return letters, n_slots, placeholders, errors, warnings
-            elif u_char in string.digits and 0 < int(u_char) < 10:
-                n_slots.append(int(u_char))
-                slot_active = True
-            elif len(u_char) == 2 and 9 < int(u_char) < 17:
-                n_slots.append(int(u_char))
-                slot_active = True
-            else:
-                warnings.append(f"WARNING Ignoring character/slot ({char}) ...")
+                        cs = n_slots[-1]
+                        placeholders.setdefault(cs, []).append(u_char)
+                        ph_cs = placeholders[cs]
+                        if len(ph_cs) > cs:
+                            errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
+                            return letters, n_slots, placeholders, errors, warnings
+        elif all(c in string.digits for c in chars) and 0 < int(chars) < 10:
+            n_slots.append(int(chars))
+            slot_active = True
+        else:
+            warnings.append(f"WARNING Ignoring characters/slot ({chars}) ...")
 
     return letters, n_slots, placeholders, errors, warnings
 
