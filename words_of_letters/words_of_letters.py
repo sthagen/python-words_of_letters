@@ -138,7 +138,7 @@ def apply_rules(letters, n_slots, placeholders, errors, warnings):
 
     n_slots.sort(reverse=True)
     if len(n_slots) > MAX_SLOTS:
-        errors.append(f"ERROR More than 4 slots given ({len(n_slots)})")
+        errors.append(f"ERROR More than {MAX_SLOTS} slots given ({len(n_slots)})")
         return letters, n_slots, placeholders, errors, warnings
 
     sum_slots = sum(n_slots)
