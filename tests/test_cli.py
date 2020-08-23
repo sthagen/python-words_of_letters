@@ -40,6 +40,16 @@ def test_main_nok_too_many_placeholders(capsys):
     assert out.strip() == usage_feedback
 
 
+def test_main_nok_too_many_placeholders_same_size_slots(capsys):
+    job = ["A", "B", "A", "B", "2", "A", "_", "2", "_", "B"]
+    usage_feedback = (
+        "ERROR 1 too many placeholders (['A', '_', '_']) for slot 2"
+    )
+    assert cli.main(job) == 2
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
+
+
 def test_main_ok_init_short_option(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     job = ["-i", 2, 2]
