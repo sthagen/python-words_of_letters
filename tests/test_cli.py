@@ -29,7 +29,17 @@ def test_main_nok_too_many_slots(capsys):
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
 
-    
+
+def test_main_nok_too_many_placeholders(capsys):
+    job = ["A", "B", "T", "3", "A", "_", "_", "_"]
+    usage_feedback = (
+        'ERROR Only (2) characters given but requested (12) slots (12) ...'
+    )
+    assert cli.main(job) == 2
+    out, err = capsys.readouterr()
+    assert out.strip() == usage_feedback
+
+
 def test_main_ok_init_short_option(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     job = ["-i", 2, 2]
