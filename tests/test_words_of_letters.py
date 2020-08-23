@@ -128,6 +128,16 @@ def test_parse_ok_minimal():
     assert warnings == []
 
 
+def test_parse_ok_minimal_ignored_placeholder():
+    job = ["A", "_", "T", "2"]
+    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    assert letters == job[:3:2]
+    assert n_slots == [int(job[-1])]
+    assert placeholders == {}
+    assert errors == []
+    assert warnings == ['WARNING Ignoring placeholder as letter (_) ...']
+
+
 def test_parse_ok_minimal_wildcard_placeholders():
     job = ["A", "T", "2", "_", "_"]
     letters, n_slots, placeholders, errors, warnings = wol.parse(job)
