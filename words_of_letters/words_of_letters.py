@@ -100,6 +100,14 @@ def parse(argv):
     n_slots = []
     placeholders = {}
     errors, warnings = [], []
+
+    if len(argv) < 3:
+        errors.append(
+            "Usage: script <letter> <letter> ... <slots> [<placeholders> <slots> ...]\n"
+            f"Received ({argv}) argument vector"
+        )
+        return letters, n_slots, placeholders, errors, warnings
+
     slot_active = False
     for char in argv:
         u_char = char.upper()
@@ -165,11 +173,6 @@ def solve(argv=None):
         print(f"Initializing word databases for sizes in [{min_size}, {max_size}] ...")
         derive_databases(min_size, max_size)
         return 0
-
-    if len(argv) < 3:
-        print("Usage: script <letter> <letter> ... <slots> [<placeholders> <slots> ...]")
-        print(f"Received ({argv}) argument vector")
-        return 2
 
     letters, n_slots, placeholders, errors, warnings = apply_rules(*parse(argv))
 
