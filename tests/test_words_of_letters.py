@@ -21,6 +21,13 @@ def test_dump_ok_minimal():
     assert wol.dump({'AT', 'WC', 'BH', 'WM', 'WG', 'AU'}) is None
 
 
+def test_load_ok_minimal():
+    wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
+    wol.DB_BASE_PATH = DB_BASE_PATH
+    word_length = 2
+    assert set(wol.load(word_length, {"A"})) == {'AT', 'AU'}
+
+
 def test_match_gen_ok_minimal():
     letters = ["A", "T", "W"]
     word_length = 2
