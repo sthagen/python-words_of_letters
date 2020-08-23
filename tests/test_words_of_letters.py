@@ -28,6 +28,20 @@ def test_load_ok_minimal():
     assert set(wol.load(word_length, {"A"})) == {'AT', 'AU'}
 
 
+def test_display_solutions_ok_minimal(capsys):
+    letters = ["A", "B"]
+    matches = ["AB"]
+    slots = 2
+    screen_display = (
+        'Found 1 candidates of length(2) from letters(A B):\n'
+        '\n'
+        '    0) AB'
+    )
+    assert wol.display_solutions(letters, matches, slots) is None
+    out, err = capsys.readouterr()
+    assert out.strip() == screen_display
+
+
 def test_match_gen_ok_minimal():
     letters = ["A", "T", "W"]
     word_length = 2
