@@ -124,6 +124,36 @@ def parse(argv):
             slot_active = True
         else:
             warnings.append(f"WARNING Ignoring character/slot ({char}) ...")
+
+    return letters, n_slots, placeholders, errors, warnings
+
+
+def apply_rules(letters, n_slots, placeholders, errors, warnings):
+    if errors:
+        return letters, n_slots, placeholders, errors, warnings
+    n_letters = len(letters)
+    if n_letters > SWIPE_LETTERS:
+        errors.append(f"ERROR More than {SWIPE_LETTERS} letters given ({n_letters})")
+        return letters, n_slots, placeholders, errors, warnings
+
+    n_slots.sort(reverse=True)
+    if len(n_slots) > MAX_SLOTS:
+        errors.append(f"ERROR More than 4 slots given ({len(n_slots)})")
+        return letters, n_slots, placeholders, errors, warnings
+
+    sum_slots = sum(n_slots)
+    if sum_slots > n_letters:
+        errors.append(
+            f"ERROR Only ({n_letters}) characters given but requested ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
+        )
+        return letters, n_slots, placeholders, errors, warnings
+
+    if not sum_slots:
+        errors.append(
+            f"ERROR ({n_letters}) character{'' if n_letters == 1 else 's'} given but requested no ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
+        )
+        return letters, n_slots, placeholders, errors, warnings
+
     return letters, n_slots, placeholders, errors, warnings
 
 
@@ -141,7 +171,7 @@ def solve(argv=None):
         print(f"Received ({argv}) argument vector")
         return 2
 
-    letters, n_slots, placeholders, errors, warnings = parse(argv)
+    letters, n_slots, placeholders, errors, warnings = apply_rules(*parse(argv))
 
     for warning in warnings:
         print(warning)
@@ -150,33 +180,9 @@ def solve(argv=None):
         print(errors[0])  # Early exit guarantees only one entry
         return 2
 
-    n_letters = len(letters)
-    if n_letters > SWIPE_LETTERS:
-        print(f"ERROR More than {SWIPE_LETTERS} letters given ({n_letters})")
-        return 2
-
-    n_slots.sort(reverse=True)
-    if len(n_slots) > MAX_SLOTS:
-        print(f"ERROR More than 4 slots given ({len(n_slots)})")
-        return 2
-
-    sum_slots = sum(n_slots)
-    if sum_slots > n_letters:
-        print(
-            f"ERROR Only ({n_letters}) characters given but requested ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
-        )
-        return 2
-
-    unique_letters = set(letters)
-    if not sum_slots:
-        print(
-            f"ERROR ({n_letters}) character{'' if n_letters == 1 else 's'} given but requested no ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
-        )
-        return 2
-
     slots = n_slots[0]
     places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
-    n_candidates = load(slots, unique_letters)
+    n_candidates = load(slots, set(letters))
 
     display_letters(letters)
 
