@@ -183,12 +183,12 @@ def solve(argv=None):
         print(errors[0])  # Early exit guarantees only one entry
         return 2
 
-    slots = n_slots[0]
-    places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
-    n_candidates = load(slots, set(letters))
+    for slots in n_slots:
+        places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
+        n_candidates = load(slots, set(letters))
 
-    display_letters(letters)
+        display_letters(letters)
 
-    matches = sorted(set(match_gen(n_candidates, letters, places)))
-    display_solutions(letters, matches, slots)
+        matches = sorted(set(match_gen(n_candidates, letters, places)))
+        display_solutions(letters, matches, slots)
     return 0
