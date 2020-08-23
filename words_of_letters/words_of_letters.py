@@ -94,6 +94,38 @@ def display_solutions(letters, matches, slots):
     print("\n\n")
 
 
+def parse(argv):
+    letters = []
+    n_slots = []
+    placeholders = {}
+    errors, warnings = [], []
+    slot_active = False
+    for char in argv:
+        cand = char.upper()
+        if cand in ASCII_LETTERS or cand in EXTRA_LETTERS or cand == "_":
+            if not slot_active:
+                if cand != "_":
+                    letters.append(cand)
+                else:
+                    warnings.append(f"WARNING Ignoring placeholder as letter ({char}) ...")
+            else:
+                cs = n_slots[-1]
+                placeholders.setdefault(cs, []).append(cand)
+                ph_cs = placeholders[cs]
+                if len(ph_cs) > cs:
+                    errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
+                    return letters, n_slots, placeholders, errors, warnings
+        elif cand in string.digits and 0 < int(cand) < 10:
+            n_slots.append(int(cand))
+            slot_active = True
+        elif len(cand) == 2 and 9 < int(cand) < 17:
+            n_slots.append(int(cand))
+            slot_active = True
+        else:
+            warnings.append(f"WARNING Ignoring character/slot ({char}) ...")
+    return letters, n_slots, placeholders, errors, warnings
+
+
 def solve(argv=None):
     """Drive the solver."""
     argv = argv if argv else sys.argv[1:]
@@ -108,34 +140,14 @@ def solve(argv=None):
         print(f"Received ({argv}) argument vector")
         return 2
 
-    letters = []
-    n_slots = []
-    placeholders = {}
-    slot_active = False
-    for char in argv:
-        cand = char.upper()
-        if cand in ASCII_LETTERS or cand in EXTRA_LETTERS or cand == "_":
-            if not slot_active:
-                if cand != "_":
-                    letters.append(cand)
-                else:
-                    print(f"WARNING Ignoring placeholder as letter ({char}) ...")
-            else:
-                cs = n_slots[-1]
-                placeholders.setdefault(cs, []).append(cand)
-                ph_cs = placeholders[cs]
-                if len(ph_cs) > cs:
-                    print(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
-                    return 2
+    letters, n_slots, placeholders, errors, warnings = parse(argv)
 
-        elif cand in string.digits and 0 < int(cand) < 10:
-            n_slots.append(int(cand))
-            slot_active = True
-        elif len(cand) == 2 and 9 < int(cand) < 17:
-            n_slots.append(int(cand))
-            slot_active = True
-        else:
-            print(f"WARNING Ignoring character/slot ({char}) ...")
+    for warning in warnings:
+        print(warning)
+
+    if errors:
+        print(errors[0])  # Early exit guarantees only one entry
+        return 2
 
     n_letters = len(letters)
     if n_letters > SWIPE_LETTERS:
