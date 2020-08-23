@@ -12,7 +12,7 @@ LANGUAGE_TEXT_FILE_PATH = f"tests/fixture/text/{LANGUAGE_GRAMMAR}_title.dict"
 def test_main_nok_empty_array(capsys):
     job = ['[]']
     usage_feedback = (
-        'Usage: script <letter> <letter> ... <slots> [<placeholders> <slots> ...]\n'
+        'Usage: script <letters> ... <slots> [<placeholders> <slots> ...]\n'
         "Received (['[]']) argument vector"
     )
     assert cli.main(job) == 2
