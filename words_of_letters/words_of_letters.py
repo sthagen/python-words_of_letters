@@ -184,7 +184,9 @@ def solve(argv=None):
         return 2
 
     for slots in n_slots:
-        places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
+        places = {}
+        if placeholders.get(slots):
+            places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
         n_candidates = load(slots, set(letters))
 
         display_letters(letters)
