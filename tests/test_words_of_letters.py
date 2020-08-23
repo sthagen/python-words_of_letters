@@ -135,6 +135,16 @@ def test_parse_ok_minimal_wildcard_placeholders():
     assert warnings == []
 
 
+def test_parse_ok_small_mixed_placeholders():
+    job = ["A", "B", "T", "3", "A", "_", "_"]
+    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    assert letters == job[:3]
+    assert n_slots == [int(job[3])]
+    assert placeholders == {int(job[3]): job[3+1:]}
+    assert errors == []
+    assert warnings == []
+
+
 def test_solve_nok_too_many_slots(capsys):
     job = ["A", "B", "12"]
     chars = len(job[:2])
