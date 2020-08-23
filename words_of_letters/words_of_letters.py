@@ -126,7 +126,7 @@ def parse(argv):
                         if len(ph_cs) > cs:
                             errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
                             return letters, n_slots, placeholders, errors, warnings
-        elif all(c in string.digits for c in chars) and 0 < int(chars) < 10:
+        elif all(c in string.digits for c in chars) and 0 < int(chars) < SWIPE_LETTERS:
             n_slots.append(int(chars))
             slot_active = True
         else:
