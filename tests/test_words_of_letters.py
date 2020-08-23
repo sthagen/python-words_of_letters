@@ -105,6 +105,16 @@ def test_display_letters_ok_swipe(capsys):
     assert out.strip() == screen_display
 
 
+def test_parse_ok_empty():
+    job = []
+    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    assert letters == []
+    assert n_slots == []
+    assert placeholders == {}
+    assert errors == []
+    assert warnings == []
+
+
 def test_solve_nok_too_many_slots(capsys):
     job = ["A", "B", "12"]
     chars = len(job[:2])
