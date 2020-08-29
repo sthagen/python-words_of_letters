@@ -161,12 +161,13 @@ def test_parse_ok_minimal():
 def test_parse_ok_minimal_stanzas():
     job = ["AT", "AT", "2"]
     letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
-    assert letters == ['A', 'T', 'A', 'T']
-    assert stanzas == [['A', 'T'], ['A', 'T']]
+    assert letters == ['a', 't', 'a', 't']
+    assert stanzas == [['a', 't'], ['a', 't']]
     assert n_slots == [int(job[-1])]
     assert placeholders == {}
     assert errors == []
     assert warnings == []
+
 
 def test_parse_ok_minimal_ignored_placeholder():
     job = ["A", "_", "T", "2"]
