@@ -280,15 +280,15 @@ def test_solve_ok_minimal(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     wol.DB_BASE_PATH = DB_BASE_PATH
     word_length = 2
-    job = ["A", "T", f"{word_length}"]
+    job = ["a", "t", f"{word_length}"]
     screen_display = (
         '2 Letters available:\n'
         '\n'
-        '    A T\n'
+        '    a t\n'
         '\n'
-        'Found 1 candidates of length(2) from letters(A T):\n'
+        'Found 1 candidates of length(2) from letters(a t):\n'
         '\n'
-        '    0) AT'
+        '    0) at'
     )
     assert wol.solve(job) == 0
     out, err = capsys.readouterr()
@@ -299,15 +299,15 @@ def test_solve_ok_minimal_with_placeholders(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     wol.DB_BASE_PATH = DB_BASE_PATH
     word_length = 2
-    job = ["A", "T", f"{word_length}", "A", "_"]
+    job = ["a", "t", f"{word_length}", "a", "_"]
     screen_display = (
         '2 Letters available:\n'
         '\n'
-        '    A T\n'
+        '    a t\n'
         '\n'
-        'Found 1 candidates of length(2) from letters(A T):\n'
+        'Found 1 candidates of length(2) from letters(a t):\n'
         '\n'
-        '    0) AT'
+        '    0) at'
     )
     assert wol.solve(job) == 0
     out, err = capsys.readouterr()
