@@ -107,15 +107,15 @@ def test_display_letters_ok_minimal(capsys):
 
 
 def test_display_letters_ok_pictures(capsys):
-    letters = ["A" for _ in range(wol.PICTURE_LETTERS)]
+    letters = ["A" * (wol.PICTURE_LETTERS // 2)] * 2
     screen_display = (
         f"{len(letters)} Letters available:\n\n"
-        f"    {' '.join(letters[:6])}\n"
-        f"    {' '.join(letters[6:])}"
+        f"    {' '.join(letters[:wol.PICTURE_LETTERS // 2])}\n"
+        f"    {' '.join(letters[wol.PICTURE_LETTERS // 2:])}"
     )
     assert wol.display_letters(letters) is None
     out, err = capsys.readouterr()
-    assert out.strip() == screen_display
+    assert out.strip() == screen_display.strip()
 
 
 def test_display_letters_ok_swipe(capsys):
