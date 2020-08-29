@@ -120,18 +120,24 @@ def test_display_letters_ok_pictures(capsys):
 
 
 def test_display_letters_ok_swipe(capsys):
-    letters = ["A" * (wol.SWIPE_LETTERS // 6)] * 6
+    stanzas = [
+        ["A", "A", "A", "A", "A"], ["A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A"], ["A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A"], ["A", "A", "A", "A", "A"],
+    ]
+    n_letters = sum(len(ch) for ch in stanzas)
     screen_display = (
-        f"{len(letters)} Letters available:\n\n"
-        f"    {' '.join(letters[:5])}\n"
-        f"    {' '.join(letters[5:10])}\n"
-        f"    {' '.join(letters[10:15])}\n"
-        f"    {' '.join(letters[15:20])}\n"
-        f"    {' '.join(letters[20:])}"
+        f"{n_letters} Letters available:\n\n"
+        "    A A A A A\n"
+        "    A A A A A\n"
+        "    A A A A A\n"
+        "    A A A A A\n"
+        "    A A A A A\n"
+        "    A A A A A\n"
     )
-    assert wol.display_letters(letters) is None
+    assert wol.display_stanzas(stanzas) is None
     out, err = capsys.readouterr()
-    assert out.strip() == screen_display
+    assert out.strip() == screen_display.strip()
 
 
 def test_parse_nok_empty():
