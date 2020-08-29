@@ -25,7 +25,7 @@ def test_load_ok_minimal():
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     wol.DB_BASE_PATH = DB_BASE_PATH
     word_length = 2
-    assert set(wol.load(word_length, {"A"})) == {'AT', 'AU'}
+    assert set(wol.load(word_length, {"a"})) == {'at', 'au'}
 
 
 def test_display_solutions_ok_minimal(capsys):
