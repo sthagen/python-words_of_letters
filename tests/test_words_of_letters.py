@@ -18,7 +18,7 @@ def test_read_mixed_case_word_text_ok_minimal():
 def test_dump_ok_minimal():
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     wol.DB_BASE_PATH = DB_BASE_PATH
-    assert wol.dump({'AT', 'WC', 'BH', 'WM', 'WG', 'AU'}) is None
+    assert wol.dump({'at', 'wc', 'bh', 'wm', 'wg', 'au'}) is None
 
 
 def test_load_ok_minimal():
