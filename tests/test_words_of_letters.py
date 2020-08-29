@@ -183,7 +183,7 @@ def test_parse_ok_minimal_ignored_placeholder():
 def test_parse_ok_minimal_wildcard_placeholders():
     job = ["A", "T", "2", "_", "_"]
     letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
-    assert letters == job[:2]
+    assert letters == [ch.lower() for ch in job[:2]]
     assert stanzas == []
     assert n_slots == [int(job[2])]
     assert placeholders == {int(job[2]): job[2+1:]}
