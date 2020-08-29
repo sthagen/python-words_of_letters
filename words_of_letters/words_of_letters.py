@@ -10,9 +10,9 @@ ASCII_LETTERS = string.ascii_uppercase
 EXTRA_LETTERS = ("Ä", "Ö", "Ü")
 
 PICTURE_LETTERS = 12
-SWIPE_LETTERS = 25
+SWIPE_LETTERS = 30
 MAX_LETTERS = SWIPE_LETTERS
-MAX_SLOTS = 4
+MAX_SLOTS = 6
 
 LANGUAGE_GRAMMAR = "ngerman"  # Sample for German, new grammar
 LANGUAGE_TEXT_FILE_PATH = f"data/text/{LANGUAGE_GRAMMAR}.dict" 
