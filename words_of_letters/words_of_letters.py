@@ -67,18 +67,7 @@ def display_letters(letters):
     n_letters = len(letters)
     print(f"{n_letters} Letters available:")
     print()
-    if n_letters in (PICTURE_LETTERS, SWIPE_LETTERS):
-        if n_letters == PICTURE_LETTERS:
-            print(f"    {' '.join(letters[:6])}")
-            print(f"    {' '.join(letters[6:])}")
-        else:  # SWIPE_LETTERS
-            print(f"    {' '.join(letters[:5])}")
-            print(f"    {' '.join(letters[5:10])}")
-            print(f"    {' '.join(letters[10:15])}")
-            print(f"    {' '.join(letters[15:20])}")
-            print(f"    {' '.join(letters[20:])}")
-    else:
-        print(f"    {' '.join(letters)}")
+    print(f"    {' '.join(letters)}")
     print()
 
 
