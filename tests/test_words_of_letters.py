@@ -12,7 +12,7 @@ DB_BASE_PATH = f"tests/fixture/db/{LANGUAGE_GRAMMAR}_dict_"
 def test_read_mixed_case_word_text_ok_minimal():
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     word_length = 2
-    assert wol.read_mixed_case_word_text(word_length) == {'AT', 'WC', 'BH', 'WM', 'WG', 'AU'}
+    assert wol.read_mixed_case_word_text(word_length) == {'at', 'wc', 'bh', 'wm', 'wg', 'au'}
 
 
 def test_dump_ok_minimal():
