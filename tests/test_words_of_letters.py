@@ -150,7 +150,7 @@ def test_parse_nok_empty():
 def test_parse_ok_minimal():
     job = ["A", "T", "2"]
     letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
-    assert letters == job[:2]
+    assert letters == [ch.lower() for ch in job[:2]]
     assert stanzas == []
     assert n_slots == [int(job[-1])]
     assert placeholders == {}
