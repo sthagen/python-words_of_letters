@@ -25,7 +25,7 @@ def read_mixed_case_word_text(word_length):
         wl = word_length
         ld = handle.readlines
         return {
-            x.strip().lower() for x in ld() if len(x.strip()) == wl  # and "ß" not in x
+            x.strip().lower() for x in ld() if len(x.strip()) == wl
         }
 
 
