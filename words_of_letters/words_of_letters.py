@@ -82,6 +82,15 @@ def display_letters(letters):
     print()
 
 
+def display_stanzas(stanzas):
+    n_letters = sum(len(stanza) for stanza in stanzas)
+    print(f"{n_letters} Letters available:")
+    print()
+    for stanza in stanzas:
+        print(f"    {' '.join(stanza)}")
+    print()
+
+
 def display_solutions(letters, matches, slots):
     print(
         f"Found {len(matches)} candidates of length({slots}) from "
@@ -97,6 +106,7 @@ def display_solutions(letters, matches, slots):
 
 def parse(argv):
     letters = []
+    stanzas = []
     n_slots = []
     placeholders = {}
     errors, warnings = [], []
@@ -106,7 +116,12 @@ def parse(argv):
             "Usage: script <letters> ... <slots> [<placeholders> <slots> ...]\n"
             f"Received ({argv}) argument vector"
         )
-        return letters, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, errors, warnings
+
+    for group in argv:
+        if len(group) > 1:
+            if all(u_char in ASCII_LETTERS or u_char in EXTRA_LETTERS for u_char in group.upper()):
+                stanzas.append([char.upper() for char in group])
 
     slot_active = False
     for chars in argv:
@@ -125,43 +140,43 @@ def parse(argv):
                         ph_cs = placeholders[cs]
                         if len(ph_cs) > cs:
                             errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
-                            return letters, n_slots, placeholders, errors, warnings
+                            return letters, stanzas, n_slots, placeholders, errors, warnings
         elif all(c in string.digits for c in chars) and 0 < int(chars) < SWIPE_LETTERS:
             n_slots.append(int(chars))
             slot_active = True
         else:
             warnings.append(f"WARNING Ignoring characters/slot ({chars}) ...")
 
-    return letters, n_slots, placeholders, errors, warnings
+    return letters, stanzas, n_slots, placeholders, errors, warnings
 
 
-def apply_rules(letters, n_slots, placeholders, errors, warnings):
+def apply_rules(letters, stanzas, n_slots, placeholders, errors, warnings):
     if errors:
-        return letters, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, errors, warnings
     n_letters = len(letters)
     if n_letters > SWIPE_LETTERS:
         errors.append(f"ERROR More than {SWIPE_LETTERS} letters given ({n_letters})")
-        return letters, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, errors, warnings
 
     n_slots.sort(reverse=True)
     if len(n_slots) > MAX_SLOTS:
         errors.append(f"ERROR More than {MAX_SLOTS} slots given ({len(n_slots)})")
-        return letters, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, errors, warnings
 
     sum_slots = sum(n_slots)
     if sum_slots > n_letters:
         errors.append(
             f"ERROR Only ({n_letters}) characters given but requested ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
         )
-        return letters, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, errors, warnings
 
     if not sum_slots:
         errors.append(
             f"ERROR ({n_letters}) character{'' if n_letters == 1 else 's'} given but requested no ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
         )
-        return letters, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, errors, warnings
 
-    return letters, n_slots, placeholders, errors, warnings
+    return letters, stanzas, n_slots, placeholders, errors, warnings
 
 
 def solve(argv=None):
@@ -173,7 +188,7 @@ def solve(argv=None):
         derive_databases(min_size, max_size)
         return 0
 
-    letters, n_slots, placeholders, errors, warnings = apply_rules(*parse(argv))
+    letters, stanzas, n_slots, placeholders, errors, warnings = apply_rules(*parse(argv))
 
     for warning in warnings:
         print(warning)
@@ -188,7 +203,10 @@ def solve(argv=None):
             places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
         n_candidates = load(slots, set(letters))
 
-        display_letters(letters)
+        if any(len(s) > 1 for s in stanzas):
+            display_stanzas(stanzas)
+        else:
+            display_letters(letters)
 
         matches = sorted(set(match_gen(n_candidates, letters, places)))
         display_solutions(letters, matches, slots)

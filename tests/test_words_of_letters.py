@@ -135,8 +135,9 @@ def test_display_letters_ok_swipe(capsys):
 
 def test_parse_nok_empty():
     job = []
-    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
     assert letters == []
+    assert stanzas == []
     assert n_slots == []
     assert placeholders == {}
     assert errors == [
@@ -148,18 +149,30 @@ def test_parse_nok_empty():
 
 def test_parse_ok_minimal():
     job = ["A", "T", "2"]
-    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
     assert letters == job[:2]
+    assert stanzas == []
     assert n_slots == [int(job[-1])]
     assert placeholders == {}
     assert errors == []
     assert warnings == []
 
 
+def test_parse_ok_minimal_stanzas():
+    job = ["AT", "AT", "2"]
+    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
+    assert letters == ['A', 'T', 'A', 'T']
+    assert stanzas == [['A', 'T'], ['A', 'T']]
+    assert n_slots == [int(job[-1])]
+    assert placeholders == {}
+    assert errors == []
+    assert warnings == []
+
 def test_parse_ok_minimal_ignored_placeholder():
     job = ["A", "_", "T", "2"]
-    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
     assert letters == job[:3:2]
+    assert stanzas == []
     assert n_slots == [int(job[-1])]
     assert placeholders == {}
     assert errors == []
@@ -168,8 +181,9 @@ def test_parse_ok_minimal_ignored_placeholder():
 
 def test_parse_ok_minimal_wildcard_placeholders():
     job = ["A", "T", "2", "_", "_"]
-    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
     assert letters == job[:2]
+    assert stanzas == []
     assert n_slots == [int(job[2])]
     assert placeholders == {int(job[2]): job[2+1:]}
     assert errors == []
@@ -178,8 +192,9 @@ def test_parse_ok_minimal_wildcard_placeholders():
 
 def test_parse_ok_small_mixed_placeholders():
     job = ["A", "B", "T", "3", "A", "_", "_"]
-    letters, n_slots, placeholders, errors, warnings = wol.parse(job)
+    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
     assert letters == job[:3]
+    assert stanzas == []
     assert n_slots == [int(job[3])]
     assert placeholders == {int(job[3]): job[3+1:]}
     assert errors == []
