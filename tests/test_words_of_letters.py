@@ -51,12 +51,12 @@ def test_match_gen_ok_minimal():
 
 
 def test_match_gen_ok_small_wildcard_placeholders():
-    letters = ["A", "T", "W"]
+    letters = ["a", "t", "w"]
     places = {}
     word_length = 2
     n_candidates = wol.read_mixed_case_word_text(word_length)
     matches = sorted(set(wol.match_gen(n_candidates, letters, places)))
-    assert matches == ["AT"]
+    assert matches == ["at"]
 
 
 def test_match_gen_ok_small_mixed_matching_placeholders():
