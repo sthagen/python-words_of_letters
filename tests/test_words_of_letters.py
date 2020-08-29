@@ -43,11 +43,11 @@ def test_display_solutions_ok_minimal(capsys):
 
 
 def test_match_gen_ok_minimal():
-    letters = ["A", "T", "W"]
+    letters = ["a", "t", "w"]
     word_length = 2
     n_candidates = wol.read_mixed_case_word_text(word_length)
     matches = sorted(set(wol.match_gen(n_candidates, letters)))
-    assert matches == ["AT"]
+    assert matches == ["at"]
 
 
 def test_match_gen_ok_small_wildcard_placeholders():
