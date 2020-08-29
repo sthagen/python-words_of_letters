@@ -60,12 +60,12 @@ def test_match_gen_ok_small_wildcard_placeholders():
 
 
 def test_match_gen_ok_small_mixed_matching_placeholders():
-    letters = ["A", "T", "W"]
-    places = {0: "A"}
+    letters = ["a", "t", "w"]
+    places = {0: "a"}
     word_length = 2
     n_candidates = wol.read_mixed_case_word_text(word_length)
     matches = sorted(set(wol.match_gen(n_candidates, letters, places)))
-    assert matches == ["AT"]
+    assert matches == ["at"]
 
 
 def test_match_gen_ok_small_mixed_failing_placeholders():
