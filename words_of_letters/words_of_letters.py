@@ -6,8 +6,8 @@ import string
 import sys
 
 ENCODING = "utf-8"
-ASCII_LETTERS = string.ascii_uppercase
-EXTRA_LETTERS = ("Ä", "Ö", "Ü")
+ASCII_LETTERS = string.ascii_lowercase
+EXTRA_LETTERS = ("ä", "ö", "ü", "ß")
 
 PICTURE_LETTERS = 12
 SWIPE_LETTERS = 30
@@ -25,7 +25,7 @@ def read_mixed_case_word_text(word_length):
         wl = word_length
         ld = handle.readlines
         return {
-            x.strip().upper() for x in ld() if len(x.strip()) == wl and "ß" not in x
+            x.strip().lower() for x in ld() if len(x.strip()) == wl  # and "ß" not in x
         }
 
 
@@ -120,23 +120,23 @@ def parse(argv):
 
     for group in argv:
         if len(group) > 1:
-            if all(u_char in ASCII_LETTERS or u_char in EXTRA_LETTERS for u_char in group.upper()):
-                stanzas.append([char.upper() for char in group])
+            if all(l_char in ASCII_LETTERS or l_char in EXTRA_LETTERS for l_char in group.lower()):
+                stanzas.append([char.lower() for char in group])
 
     slot_active = False
     for chars in argv:
         if all(c not in string.digits for c in chars):
             for char in chars:
-                u_char = char.upper()
-                if u_char in ASCII_LETTERS or u_char in EXTRA_LETTERS or u_char == "_":
+                l_char = char.lower()
+                if l_char in ASCII_LETTERS or l_char in EXTRA_LETTERS or l_char == "_":
                     if not slot_active:
-                        if u_char != "_":
-                            letters.append(u_char)
+                        if l_char != "_":
+                            letters.append(l_char)
                         else:
                             warnings.append(f"WARNING Ignoring placeholder as letter ({char}) ...")
                     else:
                         cs = n_slots[-1]
-                        placeholders.setdefault(cs, []).append(u_char)
+                        placeholders.setdefault(cs, []).append(l_char)
                         ph_cs = placeholders[cs]
                         if len(ph_cs) > cs:
                             errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
