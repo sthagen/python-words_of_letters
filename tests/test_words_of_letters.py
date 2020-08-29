@@ -186,7 +186,7 @@ def test_parse_ok_minimal_wildcard_placeholders():
     assert letters == [ch.lower() for ch in job[:2]]
     assert stanzas == []
     assert n_slots == [int(job[2])]
-    assert placeholders == {int(job[2]): job[2+1:]}
+    assert placeholders == {int(job[2]): [ch.lower() for ch in job[2+1:]]}
     assert errors == []
     assert warnings == []
 
