@@ -33,7 +33,7 @@ def test_main_nok_too_many_slots(capsys):
 def test_main_nok_too_many_placeholders(capsys):
     job = ["A", "B", "T", "3", "A", "_", "_", "_"]
     usage_feedback = (
-        "ERROR 1 too many placeholders (['A', '_', '_', '_']) for slot 3"
+        "ERROR 1 too many placeholders (['a', '_', '_', '_']) for slot 3"
     )
     assert cli.main(job) == 2
     out, err = capsys.readouterr()
@@ -43,7 +43,7 @@ def test_main_nok_too_many_placeholders(capsys):
 def test_main_nok_too_many_placeholders_same_size_slots(capsys):
     job = ["A", "B", "A", "B", "2", "A", "_", "2", "_", "B"]
     usage_feedback = (
-        "ERROR 1 too many placeholders (['A', '_', '_']) for slot 2"
+        "ERROR 1 too many placeholders (['a', '_', '_']) for slot 2"
     )
     assert cli.main(job) == 2
     out, err = capsys.readouterr()
