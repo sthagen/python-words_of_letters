@@ -188,17 +188,15 @@ def solve(argv=None):
         return 2
 
     respect_stanzas = any(len(s) > 1 for s in stanzas)
+    ph_get = placeholders.get
     for slots in n_slots:
-        places = {}
-        if placeholders.get(slots):
-            places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
-        n_candidates = load(slots, set(letters))
-
         if respect_stanzas:
             display_stanzas(stanzas)
         else:
             display_letters(letters)
 
+        places = {k: v for k, v in enumerate(ph_get(slots)) if v != "_"} if ph_get(slots) else {}
+        n_candidates = load(slots, set(letters))
         matches = sorted(set(match_gen(n_candidates, letters, places)))
         display_solutions(letters, matches, slots)
     return 0
