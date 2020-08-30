@@ -99,14 +99,14 @@ def parse(argv):
     stanzas = []
     n_slots = []
     placeholders = {}
-    errors, warnings = [], []
+    warnings, errors = [], []
 
     if len(argv) < 2:
         errors.append(
             "Usage: script <letters> ... <slots> [<placeholders> <slots> ...]\n"
             f"Received ({argv}) argument vector"
         )
-        return letters, stanzas, n_slots, placeholders, errors, warnings
+        return letters, stanzas, n_slots, placeholders, warnings, errors
 
     for group in argv:
         if len(group) > 1:
@@ -130,44 +130,44 @@ def parse(argv):
                         ph_cs = placeholders[cs]
                         if len(ph_cs) > cs:
                             errors.append(f"ERROR {len(ph_cs) - cs} too many placeholders ({ph_cs}) for slot {cs}")
-                            return letters, stanzas, n_slots, placeholders, errors, warnings
+                            return letters, stanzas, n_slots, placeholders, warnings, errors
         elif all(c in string.digits for c in chars) and 0 < int(chars) < SWIPE_LETTERS:
             n_slots.append(int(chars))
             slot_active = True
         else:
             warnings.append(f"WARNING Ignoring characters/slot ({chars}) ...")
 
-    return letters, stanzas, n_slots, placeholders, errors, warnings
+    return letters, stanzas, n_slots, placeholders, warnings, errors
 
 
-def apply_rules(letters, stanzas, n_slots, placeholders, errors, warnings):
-    incoming_dimensions = letters, stanzas, n_slots, placeholders
+def apply_rules(letters, stanzas, n_slots, placeholders, warnings, errors):
+    relay_dimensions = letters, stanzas, n_slots, placeholders, warnings
     if errors:
-        return *incoming_dimensions, errors, warnings
+        return *relay_dimensions, errors
     n_letters = len(letters)
     if n_letters > SWIPE_LETTERS:
         errors.append(f"ERROR More than {SWIPE_LETTERS} letters given ({n_letters})")
-        return *incoming_dimensions, errors, warnings
+        return *relay_dimensions, errors
 
     if len(n_slots) > MAX_SLOTS:
         errors.append(f"ERROR More than {MAX_SLOTS} slots given ({len(n_slots)})")
-        return *incoming_dimensions, errors, warnings
+        return *relay_dimensions, errors
 
     sum_slots = sum(n_slots)
     if sum_slots > n_letters:
         errors.append(
             f"ERROR Only ({n_letters}) characters given but requested ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
         )
-        return *incoming_dimensions, errors, warnings
+        return *relay_dimensions, errors
 
     if not sum_slots:
         errors.append(
             f"ERROR ({n_letters}) character{'' if n_letters == 1 else 's'} given but requested no ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
         )
-        return *incoming_dimensions, errors, warnings
+        return *relay_dimensions, errors
 
     n_slots.sort(reverse=True)
-    return letters, stanzas, n_slots, placeholders, errors, warnings
+    return letters, stanzas, n_slots, placeholders, warnings, errors
 
 
 def solve(argv=None):
@@ -179,7 +179,7 @@ def solve(argv=None):
         derive_databases(min_size, max_size)
         return 0
 
-    letters, stanzas, n_slots, placeholders, errors, warnings = apply_rules(*parse(argv))
+    letters, stanzas, n_slots, placeholders, warnings, errors = apply_rules(*parse(argv))
 
     for warning in warnings:
         print(warning)
