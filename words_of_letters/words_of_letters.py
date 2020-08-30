@@ -187,13 +187,14 @@ def solve(argv=None):
         print(errors[0])  # Early exit guarantees only one entry
         return 2
 
+    respect_stanzas = any(len(s) > 1 for s in stanzas)
     for slots in n_slots:
         places = {}
         if placeholders.get(slots):
             places = {k: v for k, v in enumerate(placeholders.get(slots)) if v != "_"}
         n_candidates = load(slots, set(letters))
 
-        if any(len(s) > 1 for s in stanzas):
+        if respect_stanzas:
             display_stanzas(stanzas)
         else:
             display_letters(letters)
