@@ -142,16 +142,16 @@ def test_display_letters_ok_swipe(capsys):
 
 def test_parse_nok_empty():
     job = []
-    letters, stanzas, n_slots, placeholders, errors, warnings = wol.parse(job)
+    letters, stanzas, n_slots, placeholders, warnings, errors  = wol.parse(job)
     assert letters == []
     assert stanzas == []
     assert n_slots == []
     assert placeholders == {}
+    assert warnings == []
     assert errors == [
         'Usage: script <letters> ... <slots> [<placeholders> <slots> ...]\n'
         'Received ([]) argument vector'
     ]
-    assert warnings == []
 
 
 def test_parse_ok_minimal():
