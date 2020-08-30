@@ -147,7 +147,6 @@ def apply_rules(letters, stanzas, n_slots, placeholders, errors, warnings):
         errors.append(f"ERROR More than {SWIPE_LETTERS} letters given ({n_letters})")
         return letters, stanzas, n_slots, placeholders, errors, warnings
 
-    n_slots.sort(reverse=True)
     if len(n_slots) > MAX_SLOTS:
         errors.append(f"ERROR More than {MAX_SLOTS} slots given ({len(n_slots)})")
         return letters, stanzas, n_slots, placeholders, errors, warnings
@@ -165,6 +164,7 @@ def apply_rules(letters, stanzas, n_slots, placeholders, errors, warnings):
         )
         return letters, stanzas, n_slots, placeholders, errors, warnings
 
+    n_slots.sort(reverse=True)
     return letters, stanzas, n_slots, placeholders, errors, warnings
 
 
