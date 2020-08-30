@@ -141,29 +141,30 @@ def parse(argv):
 
 
 def apply_rules(letters, stanzas, n_slots, placeholders, errors, warnings):
+    incoming_dimensions = letters, stanzas, n_slots, placeholders
     if errors:
-        return letters, stanzas, n_slots, placeholders, errors, warnings
+        return *incoming_dimensions, errors, warnings
     n_letters = len(letters)
     if n_letters > SWIPE_LETTERS:
         errors.append(f"ERROR More than {SWIPE_LETTERS} letters given ({n_letters})")
-        return letters, stanzas, n_slots, placeholders, errors, warnings
+        return *incoming_dimensions, errors, warnings
 
     if len(n_slots) > MAX_SLOTS:
         errors.append(f"ERROR More than {MAX_SLOTS} slots given ({len(n_slots)})")
-        return letters, stanzas, n_slots, placeholders, errors, warnings
+        return *incoming_dimensions, errors, warnings
 
     sum_slots = sum(n_slots)
     if sum_slots > n_letters:
         errors.append(
             f"ERROR Only ({n_letters}) characters given but requested ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
         )
-        return letters, stanzas, n_slots, placeholders, errors, warnings
+        return *incoming_dimensions, errors, warnings
 
     if not sum_slots:
         errors.append(
             f"ERROR ({n_letters}) character{'' if n_letters == 1 else 's'} given but requested no ({sum_slots}) slots ({', '.join(str(n) for n in n_slots)}) ..."
         )
-        return letters, stanzas, n_slots, placeholders, errors, warnings
+        return *incoming_dimensions, errors, warnings
 
     n_slots.sort(reverse=True)
     return letters, stanzas, n_slots, placeholders, errors, warnings
