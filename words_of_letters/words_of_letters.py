@@ -63,18 +63,19 @@ def match_gen(candidates, material, places=None):
                 yield word
 
 
-def display_letters(letters):
-    n_letters = len(letters)
+def display_letters_header(n_letters):
     print(f"{n_letters} Letters available:")
     print()
+
+
+def display_letters(letters):
+    display_letters_header(len(letters))
     print(f"    {' '.join(letters)}")
     print()
 
 
 def display_stanzas(stanzas):
-    n_letters = sum(len(stanza) for stanza in stanzas)
-    print(f"{n_letters} Letters available:")
-    print()
+    display_letters_header(sum(len(stanza) for stanza in stanzas))
     for stanza in stanzas:
         print(f"    {' '.join(stanza)}")
     print()
