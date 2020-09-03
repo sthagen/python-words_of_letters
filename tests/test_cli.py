@@ -72,11 +72,31 @@ def test_main_ok_init_long_option(capsys):
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
 
+
 def test_main_ok_minimal_with_placeholders(capsys):
     wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
     wol.DB_BASE_PATH = DB_BASE_PATH
     word_length = 2
     job = ["a", "t", f"{word_length}", "a", "_"]
+    screen_display = (
+        '2 Letters available:\n'
+        '\n'
+        '    a t\n'
+        '\n'
+        'Found 1 candidates of length(2) from letters(a t):\n'
+        '\n'
+        '    0) at'
+    )
+    assert cli.main(job) == 0
+    out, err = capsys.readouterr()
+    assert out.strip() == screen_display
+
+
+def test_main_ok_minimal_with_placeholders_stanzas(capsys):
+    wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
+    wol.DB_BASE_PATH = DB_BASE_PATH
+    word_length = 2
+    job = ["at", f"{word_length}", "a", "_"]
     screen_display = (
         '2 Letters available:\n'
         '\n'
