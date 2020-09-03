@@ -7,6 +7,7 @@ import words_of_letters.words_of_letters as wol
 
 LANGUAGE_GRAMMAR = "tgerman"  # Sample for German, new grammar
 LANGUAGE_TEXT_FILE_PATH = f"tests/fixture/text/{LANGUAGE_GRAMMAR}_title.dict"
+DB_BASE_PATH = f"tests/fixture/db/{LANGUAGE_GRAMMAR}_dict_"
 
 
 def test_main_nok_empty_array(capsys):
@@ -70,3 +71,21 @@ def test_main_ok_init_long_option(capsys):
     assert cli.main(job) == 0
     out, err = capsys.readouterr()
     assert out.strip() == usage_feedback
+
+def test_main_ok_minimal_with_placeholders(capsys):
+    wol.LANGUAGE_TEXT_FILE_PATH = LANGUAGE_TEXT_FILE_PATH
+    wol.DB_BASE_PATH = DB_BASE_PATH
+    word_length = 2
+    job = ["a", "t", f"{word_length}", "a", "_"]
+    screen_display = (
+        '2 Letters available:\n'
+        '\n'
+        '    a t\n'
+        '\n'
+        'Found 1 candidates of length(2) from letters(a t):\n'
+        '\n'
+        '    0) at'
+    )
+    assert cli.main(job) == 0
+    out, err = capsys.readouterr()
+    assert out.strip() == screen_display
